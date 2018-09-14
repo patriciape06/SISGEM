@@ -6,6 +6,9 @@
 package sisgem;
 import java.sql.*;
 import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import javax.swing.*;
 /**
  *
  * @author alumno
@@ -13,7 +16,11 @@ import java.sql.Statement;
 public class empleados extends javax.swing.JFrame {
     MySQL db = new MySQL();
     String estado="1";
-    
+    String table_name= "empleados";
+    static Statement st=null;
+    static ResultSet rs=null;
+    static Connection conn=null;
+    DefaultTableModel dtm=new DefaultTableModel();
    
     /**
      * Creates new form empleados
@@ -24,6 +31,13 @@ public class empleados extends javax.swing.JFrame {
         getContentPane().setBackground(new java.awt.Color(230,244,244));
         FmAgregar.setVisible(false);
         FmBuscar.setVisible(false);
+        String Titulos[]={"ID","DNI","Nombre y Apellido","Direccion","Estado"};
+        dtm.setColumnIdentifiers(Titulos);
+        tbEmpleados.setModel(dtm);
+        
+        
+        
+        
     }
 
     /**
@@ -151,7 +165,7 @@ public class empleados extends javax.swing.JFrame {
                                 .addComponent(jButton10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton7.setText("Agregar Empleado");
@@ -330,14 +344,14 @@ public class empleados extends javax.swing.JFrame {
                 .addGroup(FmAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonGuardar4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         FmBuscar.setVisible(true);
 
         jLabel2.setText("Buscar Por :");
 
-        cbBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dni", "apellido", "" }));
+        cbBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "dni", "apellidoEmpleado" }));
 
         btBuscar.setText("Buscar");
         btBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -377,7 +391,7 @@ public class empleados extends javax.swing.JFrame {
                     .addGroup(FmBuscarLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         FmBuscarLayout.setVerticalGroup(
             FmBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,7 +406,7 @@ public class empleados extends javax.swing.JFrame {
                         .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jMenu1.setLabel("Usuarios");
@@ -437,7 +451,7 @@ public class empleados extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(FmAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(15, Short.MAX_VALUE))
+                        .addContainerGap(27, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(FmBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -520,12 +534,43 @@ public class empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreActionPerformed
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        
-        db.MySQLConnection("root", "", "empleadosbd");
-        String v =(String)cbBuscar.getSelectedItem();
-        db.buscar("empleados", txtCampo.getText(),v);
-        //System.out.println(v);
-        
+        try{     
+                int f, i;
+                db.MySQLConnection("root", "", "empleadosbd");
+                String v =(String)cbBuscar.getSelectedItem();
+                String campo=txtCampo.getText();
+                
+                if (campo!= ""){
+                    
+                    rs=db.BuscarEmpleado2(rs,"empleados",v,campo);
+                    
+                }else{
+                    System.out.print("V="+ v);
+                   // System.out.print("campo= "+campo);
+                    rs=db.BuscarEmpleado(rs);
+                }
+                
+                
+                boolean encuentra=false;
+                String pos;
+                String datos[]=new String[6];        
+                f=dtm.getRowCount();
+                if(f>0)
+                  for(i=0;i<f;i++)
+                    dtm.removeRow(0);
+                    while(rs.next()) {
+                        datos[0]=(String)rs.getString(1);
+                        datos[1]=(String)rs.getString(2);
+                        datos[2]=(String)rs.getString(4)+' '+(String)rs.getString(5);
+                        datos[3]=(String)rs.getString(6);
+                        datos[4]=(String)rs.getString(7);
+                        dtm.addRow(datos);
+                        
+                    }
+            }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
         db.closeConnection();
     }//GEN-LAST:event_btBuscarActionPerformed
   

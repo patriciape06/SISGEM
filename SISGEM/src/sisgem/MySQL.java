@@ -7,6 +7,7 @@ package sisgem;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -67,22 +68,52 @@ public class MySQL {
     }
     
     public void buscar(String table_name, String Campo, String buscar){
-       try{
-           
-               
+       try{         
            String Query= "SELECT * FROM " + table_name + " where " + buscar + " ='" + Campo +"'";         
            Statement st= Conexion.createStatement();
            ResultSet dt= st.executeQuery(Query);
+           
+           //return dt.getArray(datos);
            while(dt.next()) 
                              {
                              System.out.println(dt.getInt (1)+ " " + dt.getString (2));
                              }
-            
-         
        }catch (SQLException ex){
            System.out.println(ex.getMessage());
            JOptionPane.showMessageDialog(null, "No se encontro el registro");
        }
    }
+    
+    
+    public static ResultSet BuscarEmpleado(ResultSet rs) throws SQLException{
+    try{
+        String Query="select * from empleados";
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
+    
+    
+    
+    public static ResultSet BuscarEmpleado2(ResultSet rs, String table_name, String v, String campo) throws SQLException{
+    try{
+        String Query= "SELECT * FROM " + table_name + " where " + v + " like '%" + campo +"%'"; // LIKE '%$texto%       
+        
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
+    
+    
     
 }
