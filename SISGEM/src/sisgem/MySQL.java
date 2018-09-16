@@ -114,6 +114,18 @@ public class MySQL {
         return rs;      
     }
     
-    
+    public static ResultSet BuscarEmpleado3(ResultSet rs, String table_name, String v, String campo) throws SQLException{
+    try{
+        String Query= "SELECT * FROM " + table_name + " where " + v + " like '%" + campo +"%'"; // LIKE '%$texto%       
+        
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
     
 }
