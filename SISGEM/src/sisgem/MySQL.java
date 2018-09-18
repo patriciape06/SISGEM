@@ -92,7 +92,7 @@ public class MySQL {
     public void BajaEmpleado(String table_name, String Id) {
         try {
             String Query = "UPDATE " + table_name + " SET "
-                    + " estado = 2 "
+                    + " estado = \"2\""
                     + " WHERE idEmpleado = \""+ (Integer.parseInt(Id))+" \"";
                    //System.out.println(Integer.parseInt(dni));
             Statement st = Conexion.createStatement();

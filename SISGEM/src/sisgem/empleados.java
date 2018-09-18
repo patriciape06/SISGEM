@@ -646,15 +646,17 @@ public class empleados extends javax.swing.JFrame {
 
     private void btModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModificarActionPerformed
         try{
-            int filaseleccionada = tbEmpleados.getSelectedRow();
-            String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 1).toString();
-            //System.out.print(idEmpleado);
+         int filaseleccionada = tbEmpleados.getSelectedRow();
+         int seleccion=tbEmpleados.getSelectedColumn();
+         if(filaseleccionada!= -1){   
+            String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 0).toString();
+            //System.out.print(filaseleccionada);
 
             FmAgregar.setVisible(true);
             FmBuscar.setVisible(false);  
           
             db.MySQLConnection("root", "", "empleadosbd");
-            rs=db.BuscarEmpleado2(rs,"empleados","dni",idEmpleado);
+            rs=db.BuscarEmpleado2(rs,"empleados","idEmpleado",idEmpleado);
             while (rs.next()){
                 String dni= rs.getString(2);
                 String cuil= rs.getString(3);
@@ -683,6 +685,9 @@ public class empleados extends javax.swing.JFrame {
           
                 
             db.closeConnection();   
+          }else{
+           JOptionPane.showMessageDialog(null, "Debe selecionar el empleado");
+          }
            
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
@@ -694,11 +699,12 @@ public class empleados extends javax.swing.JFrame {
     private void btBjaActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBjaActionPerformed1
         int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea dar de baja al empleado?");
         int filaseleccionada = tbEmpleados.getSelectedRow();
-        String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 1).toString();
+        String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 0).toString();
             if(confirmar == JOptionPane.YES_OPTION){
                 db.MySQLConnection("root", "", "empleadosbd");
                 db.BajaEmpleado("empleados", idEmpleado);
                 db.closeConnection();   
+                System.out.print(idEmpleado);
                     
             }// TODO add your handling code here:
     }//GEN-LAST:event_btBjaActionPerformed1

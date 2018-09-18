@@ -246,36 +246,34 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="apellido4" min="-2" pref="401" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="telefono4" min="-2" pref="171" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="celular4" min="-2" pref="171" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel61" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Component id="txtId" min="-2" max="-2" attributes="0"/>
-                                          </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="telefono4" min="-2" pref="171" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="celular4" min="-2" pref="171" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel61" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                          <Component id="txtId" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="correo4" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="jButtonGuardar4" min="-2" pref="97" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                              <Component id="jButton15" min="-2" pref="86" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                                          </Group>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="correo4" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="jButtonGuardar4" min="-2" pref="97" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                                          <Component id="jButton15" min="-2" pref="86" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -344,7 +342,7 @@
                       <Component id="jButtonGuardar4" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="71" max="32767" attributes="0"/>
+                  <EmptySpace pref="75" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -509,7 +507,7 @@
                       <Component id="btBja" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="btCancelar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <EmptySpace pref="67" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
