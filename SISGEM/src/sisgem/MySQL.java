@@ -67,22 +67,56 @@ public class MySQL {
         }
     }
     
-    public void buscar(String table_name, String Campo, String buscar){
-       try{         
-           String Query= "SELECT * FROM " + table_name + " where " + buscar + " ='" + Campo +"'";         
-           Statement st= Conexion.createStatement();
-           ResultSet dt= st.executeQuery(Query);
-           
-           //return dt.getArray(datos);
-           while(dt.next()) 
-                             {
-                             System.out.println(dt.getInt (1)+ " " + dt.getString (2));
-                             }
-       }catch (SQLException ex){
-           System.out.println(ex.getMessage());
-           JOptionPane.showMessageDialog(null, "No se encontro el registro");
-       }
-   }
+    public void UpdateData(String table_name, String dni, String cuil, String nombreEmpleado, String apellidoEmpleado, String domicilioEmpleado, String telefonoEmpleado, String celularEmpleado, String correoEmpleado, String Id) {
+        try {
+            String Query = "UPDATE " + table_name + " SET "
+                    + "dni =\"" + (Integer.parseInt(dni))+ " \", "     
+                    + "cuil =\"" + cuil + "\" , "
+                    + "nombreEmpleado = \"" + nombreEmpleado + " \", "
+                    + "apellidoEmpleado = \"" + apellidoEmpleado + " \", "
+                    + "domicilioEmpleado = \"" + domicilioEmpleado + " \", "    
+                    + "telefonoEmpleado = \"" + (Integer.parseInt(telefonoEmpleado)) + " \", "
+                    + "celularEmpleado = \"" + (Integer.parseInt(celularEmpleado)) + " \", "
+                    + "correoEmpleado = \"" + correoEmpleado + " \""
+                    + " WHERE idEmpleado = \""+ (Integer.parseInt(Id))+" \"";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
+    
+    public void BajaEmpleado(String table_name, String Id) {
+        try {
+            String Query = "UPDATE " + table_name + " SET "
+                    + " estado = 2 "
+                    + " WHERE idEmpleado = \""+ (Integer.parseInt(Id))+" \"";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "El empleado ha sido dado de baja");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
+    
+    public void deleteRecord(String table_name, String ID) {
+        try {
+            String Query = "DELETE FROM " + table_name + " WHERE idEmpleado = \"" + ID + "\"";
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "El empleado ha sido dado de baja");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+        }
+    }
+    
+        
     
     
     public static ResultSet BuscarEmpleado(ResultSet rs) throws SQLException{
@@ -114,18 +148,6 @@ public class MySQL {
         return rs;      
     }
     
-    public static ResultSet BuscarEmpleado3(ResultSet rs, String table_name, String v, String campo) throws SQLException{
-    try{
-        String Query= "SELECT * FROM " + table_name + " where " + v + " like '%" + campo +"%'"; // LIKE '%$texto%       
-        
-        Statement st=Conexion.createStatement();
-        rs=st.executeQuery(Query);
-        
-        }catch (SQLException ex){
-               System.out.println(ex.getMessage());
-               JOptionPane.showMessageDialog(null, "No se encontro el registro");
-        }
-        return rs;      
-    }
+   
     
 }
