@@ -134,9 +134,9 @@ public class MySQL {
     
     
     
-    public static ResultSet BuscarEmpleado2(ResultSet rs, String table_name, String v, String campo) throws SQLException{
+    public static ResultSet BuscarEmpleado2(ResultSet rs, String table_name, String campo, String dato) throws SQLException{
     try{
-        String Query= "SELECT * FROM " + table_name + " where " + v + " like '%" + campo +"%'"; // LIKE '%$texto%       
+        String Query= "SELECT * FROM " + table_name + " where " + campo + " like '%" + dato +"%'"; // LIKE '%$texto%       
         
         Statement st=Conexion.createStatement();
         rs=st.executeQuery(Query);

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package sisgem;
+import java.awt.Color;
 import java.sql.*;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +36,7 @@ public class empleados extends javax.swing.JFrame {
         String Titulos[]={"ID","DNI","Nombre y Apellido","Direccion","Estado"};
         dtm.setColumnIdentifiers(Titulos);
         tbEmpleados.setModel(dtm);
-        
+        jButton1.setBackground(Color.CYAN);
         
         
         
@@ -306,7 +307,7 @@ public class empleados extends javax.swing.JFrame {
                                 .addGroup(FmAgregarLayout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(correo4, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addContainerGap(23, Short.MAX_VALUE))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FmAgregarLayout.createSequentialGroup()
                             .addGroup(FmAgregarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FmAgregarLayout.createSequentialGroup()
@@ -414,7 +415,7 @@ public class empleados extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addGap(18, 18, 18)
                         .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         FmBuscar.setVisible(true);
@@ -441,6 +442,8 @@ public class empleados extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbEmpleados.setSelectionForeground(new java.awt.Color(0, 102, 204));
+        tbEmpleados.setShowHorizontalLines(false);
         jScrollPane1.setViewportView(tbEmpleados);
 
         btModificar.setText("Modificar");
@@ -487,7 +490,7 @@ public class empleados extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btCancelar))
                     .addGroup(FmBuscarLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addGap(43, 43, 43)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -500,14 +503,14 @@ public class empleados extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCampo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(52, 52, 52)
+                .addGap(45, 45, 45)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(49, 49, 49)
                 .addGroup(FmBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btBja, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         jMenu1.setLabel("Usuarios");
@@ -570,8 +573,10 @@ public class empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1FocusLost
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       FmAgregar.setVisible(true);
-       FmBuscar.setVisible(false);
+       // jButton7.setBackground(Color.CYAN);
+        //jButton7.setBackground(Color.getHSBColor(211, 74, 85));
+        FmAgregar.setVisible(true);
+        FmBuscar.setVisible(false);
         cuil4.setText("");
         nombre4.setText("");
 
@@ -581,7 +586,7 @@ public class empleados extends javax.swing.JFrame {
        telefono4.setText("");
        celular4.setText("");
        correo4.setText("");
-       
+       B=0;
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -597,8 +602,28 @@ public class empleados extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    public boolean Vacio(){
+        boolean[] field = new boolean[7];
+        boolean r=false;
+        field[0]=dni4.getText().isEmpty();
+        field[1]=cuil4.getText().isEmpty();
+        field[2]=nombre4.getText().isEmpty();
+        field[3]=apellido4.getText().isEmpty();
+        field[4]=direccion4.getText().isEmpty();
+        field[5]=telefono4.getText().isEmpty();
+        field[6]=celular4.getText().isEmpty();
+        if(field[0] || field[1] || field[2] || field[3]|| field[4]|| field[5]|| field[6]){
+            r=true;
+        }else{
+            r=false;
+        }
+        return r;
+    }
+    
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-        if((dni4.getText()!="") && (cuil4.getText()!="")&&(nombre4.getText()!="")&&(apellido4.getText()!="")&&(direccion4.getText()!="")&&(telefono4.getText()!="")&&(celular4.getText()!="")){ 
+        if(!(Vacio())) {
+    
+                System.out.print("paso igual");
                 db.MySQLConnection("root", "", "empleadosbd");
                 if(B==0){
                     db.insertData("empleados", dni4.getText(),
@@ -626,6 +651,7 @@ public class empleados extends javax.swing.JFrame {
                         celular4.getText(),
                         correo4.getText(),
                         txtId.getText());
+                        B=0;
                         FmBuscar.setVisible(true);
                         FmAgregar.setVisible(false);
                     }
@@ -668,31 +694,33 @@ public class empleados extends javax.swing.JFrame {
             String campo=txtCampo.getText();
 
             if (campo!= ""){
-
                 rs=db.BuscarEmpleado2(rs,"empleados",v,campo);
-
             }else{
-                System.out.print("V="+ v);
+                //System.out.print("V="+ v);
                 // System.out.print("campo= "+campo);
                 rs=db.BuscarEmpleado(rs);
             }
-
-            boolean encuentra=false;
-            String pos;
             String datos[]=new String[6];
-            f=dtm.getRowCount();
-            if(f>0)
-                for(i=0;i<f;i++)
-                dtm.removeRow(0);
-                while(rs.next()) {
-                    datos[0]=(String)rs.getString(1);
-                    datos[1]=(String)rs.getString(2);
-                    datos[2]=(String)rs.getString(4)+' '+(String)rs.getString(5);
-                    datos[3]=(String)rs.getString(6);
-                    datos[4]=(String)rs.getString(7);
-                    dtm.addRow(datos);
+            if(rs.first()){
+                
+                rs.beforeFirst();
+                f=dtm.getRowCount();
+                if(f>0)
+                    for(i=0;i<f;i++)
+                    dtm.removeRow(0);
+                    while(rs.next()) {
+                        datos[0]=(String)rs.getString(1);
+                        datos[1]=(String)rs.getString(2);
+                        datos[2]=(String)rs.getString(4)+' '+(String)rs.getString(5);
+                        datos[3]=(String)rs.getString(6);
+                        datos[4]=(String)rs.getString(7);
+                        dtm.addRow(datos);
 
-                }
+                    }
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontro el registro");
+                txtCampo.setText("");
+            }
         }catch (SQLException ex){
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "No se encontro el registro");

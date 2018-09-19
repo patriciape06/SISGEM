@@ -1,6 +1,8 @@
 package sisgem;
 import java.sql.*;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
+import static sisgem.empleados.rs;
 
 public class contratos extends javax.swing.JFrame {
     MySQL db = new MySQL();
@@ -136,7 +138,7 @@ public class contratos extends javax.swing.JFrame {
                                 .addComponent(jButton10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jButton7.setText("Nuevo Contrato");
@@ -316,7 +318,7 @@ public class contratos extends javax.swing.JFrame {
                     .addComponent(filial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BBuscar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -398,7 +400,7 @@ public class contratos extends javax.swing.JFrame {
                         .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(354, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         jMenu1.setLabel("Usuarios");
@@ -451,9 +453,9 @@ public class contratos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addComponent(FrmNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(307, 307, 307)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(FrmBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,13 +469,12 @@ public class contratos extends javax.swing.JFrame {
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addComponent(FrmBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))
-                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(FrmNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(FrmNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(FrmBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
@@ -577,16 +578,36 @@ public class contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreActionPerformed
 
     private void BBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBuscarActionPerformed
-        db.MySQLConnection("root", "", "empleadosbd");
-        //String v = (String)BBuscar.getS
-        String dniemp=dni.toString();
-        if (dniemp != ""){
-            //rs=db.buscar(rs,"empleados", dniemp, dni);
+        try{
+            db.MySQLConnection("root", "", "empleadosbd");
+            //String v = (String)BBuscar.getS
+            String dniemp=dni.getText();
+            
+            if (!(dni.getText().isEmpty())){
+                rs=db.BuscarEmpleado2(rs,"empleados", "dni", dniemp);
+                if(rs.first()){
+                
+                    rs.beforeFirst();
+                    while (rs.next()){
+                        String nom=rs.getString(4);
+                        String Ape=rs.getString(5);
+                        nomyape.setText(nom+ " "+Ape);
+                    }
+                
+                }else{
+                JOptionPane.showMessageDialog(null, "El Dni ingresado no se encuentra en la Base de Datos de Empleados");
+                txtCampo.setText("");
+                }
+                db.closeConnection();
+            }else{
+               JOptionPane.showMessageDialog(null, "Ingrese el DNI del Empleado"); 
+            }
+            
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "No se encontro el registro");
         }
         
-        
-
-        db.closeConnection();
     }//GEN-LAST:event_BBuscarActionPerformed
 
     public static void main(String args[]) {

@@ -244,7 +244,7 @@
                                       <Component id="correo4" min="-2" pref="354" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -384,7 +384,7 @@
                           <Component id="txtId" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace pref="68" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -563,7 +563,7 @@
                           <Component id="btCancelar" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" min="-2" pref="312" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -581,15 +581,15 @@
                       <Component id="txtCampo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btBuscar" alignment="3" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="102" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btModificar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="btBja" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="btCancelar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace pref="80" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -637,6 +637,10 @@
                     <Column editable="true" title="Title 4" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="66" red="0" type="rgb"/>
+                </Property>
+                <Property name="showHorizontalLines" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="buscar_empleado_jTable1"/>
