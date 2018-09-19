@@ -67,6 +67,30 @@ public class MySQL {
         }
     }
     
+    
+     public void insertContrato(String table_name, String idEmpleado, String idFilial, String fechaIngreso, String fechaInicio, String categoria, String cantHoras,String sueldoBasico) {
+        try {
+            String Query = "INSERT INTO " + table_name + " VALUES("
+                    + "\"" + 0 + "\", "   //campo autoincremental
+                    + "\"" + (Integer.parseInt(idEmpleado)) + "\", "
+                    
+                    + "\"" + (Integer.parseInt(idFilial)) + "\", "
+                    + "\"" + fechaIngreso+ "\", "
+                    + "\"" + fechaInicio+ "\", "
+                    + "\"" + (Integer.parseInt(categoria)) + "\", "
+                    + "\"" + (Integer.parseInt(cantHoras)) + "\", "
+                    + "\"" + (Integer.parseInt(sueldoBasico)) + "\")";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
+    
+    
     public void UpdateData(String table_name, String dni, String cuil, String nombreEmpleado, String apellidoEmpleado, String domicilioEmpleado, String telefonoEmpleado, String celularEmpleado, String correoEmpleado, String Id) {
         try {
             String Query = "UPDATE " + table_name + " SET "
@@ -149,5 +173,19 @@ public class MySQL {
     }
     
    
+    
+     public static ResultSet BuscarFilial(ResultSet rs) throws SQLException{
+    try{
+        String Query="select * from filiales";
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
+    
     
 }
