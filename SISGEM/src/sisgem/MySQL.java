@@ -75,8 +75,8 @@ public class MySQL {
                     + "\"" + (Integer.parseInt(idEmpleado)) + "\", "
                     
                     + "\"" + (Integer.parseInt(idFilial)) + "\", "
-                    + "\"" + fechaIngreso+ "\", "
-                    + "\"" + fechaInicio+ "\", "
+                    + "\"" + fechaIngreso + "\", "
+                    + "\"" + fechaInicio + "\", "
                     + "\"" + (Integer.parseInt(categoria)) + "\", "
                     + "\"" + (Integer.parseInt(cantHoras)) + "\", "
                     + "\"" + (Integer.parseInt(sueldoBasico)) + "\")";
@@ -173,6 +173,34 @@ public class MySQL {
     }
     
    
+     public static ResultSet BuscarContratos2(ResultSet rs, String table_name, String campo, String dato) throws SQLException{
+    try{
+        String Query= "SELECT * FROM " + table_name + " where " + campo + " like '%" + dato +"%'"; // LIKE '%$texto%       
+        
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
+    
+    
+      public static ResultSet BuscarContratos(ResultSet rs) throws SQLException{
+    try{
+        String Query="select * from contratos";
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs;      
+    }
+     
     
      public static ResultSet BuscarFilial(ResultSet rs) throws SQLException{
     try{
