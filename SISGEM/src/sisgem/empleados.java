@@ -623,7 +623,7 @@ public class empleados extends javax.swing.JFrame {
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if(!(Vacio())) {
     
-                System.out.print("paso igual");
+                //System.out.print("paso igual");
                 db.MySQLConnection("root", "", "empleadosbd");
                 if(B==0){
                     db.insertData("empleados", dni4.getText(),

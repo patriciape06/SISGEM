@@ -11,6 +11,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,6 +24,33 @@ import javax.swing.JOptionPane;
  */
 public class MySQL {
      private static Connection Conexion;
+     
+     
+     public Date StringToDate (String fecha){
+		//Diferentes fechas a parsear
+		//String stringFechaHora = "2014-10-20 20:10:59";
+		//String stringFecha = "20/10/2014";
+		//String stringHora = "10:20:59";
+                
+	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String strFecha = fecha;
+        Date fechaDate = null;
+        //Date date2 = null;
+        try {
+            fechaDate = formato.parse(strFecha);
+            java.sql.Date date2 = new java.sql.Date(fechaDate.getTime());
+            
+            //JOptionPane.showMessageDialog(null, date2);
+            return date2;
+            
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return fechaDate;
+        }	
+}
+   
+     
+     
 
     public void MySQLConnection(String user, String pass, String db_name) {
         try {
@@ -69,14 +99,17 @@ public class MySQL {
     
     
      public void insertContrato(String table_name, String idEmpleado, String idFilial, String fechaIngreso, String fechaInicio, String categoria, String cantHoras,String sueldoBasico) {
-        try {
+        Date f= null;
+         try {
+            
             String Query = "INSERT INTO " + table_name + " VALUES("
                     + "\"" + 0 + "\", "   //campo autoincremental
                     + "\"" + (Integer.parseInt(idEmpleado)) + "\", "
                     
                     + "\"" + (Integer.parseInt(idFilial)) + "\", "
-                    + "\"" + fechaIngreso + "\", "
-                    + "\"" + fechaInicio + "\", "
+                    + "\"" + StringToDate(fechaIngreso) + "\", "
+                    + "\"" + StringToDate(fechaInicio) + "\", "
+                    + "\"" + StringToDate("50/50/0000") + "\", "
                     + "\"" + (Integer.parseInt(categoria)) + "\", "
                     + "\"" + (Integer.parseInt(cantHoras)) + "\", "
                     + "\"" + (Integer.parseInt(sueldoBasico)) + "\")";
