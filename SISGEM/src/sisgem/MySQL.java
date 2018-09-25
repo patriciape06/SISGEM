@@ -98,7 +98,7 @@ public class MySQL {
     }
     
     
-     public void insertContrato(String table_name, String idEmpleado, String idFilial, String fechaIngreso, String fechaInicio, String categoria, String cantHoras,String sueldoBasico) {
+     public void insertContrato(String table_name, String idEmpleado, String idFilial, String fechaIngreso, String fechaInicio, String fechaFin, String categoria, String cantHoras,String sueldoBasico) {
         Date f= null;
          try {
             
@@ -109,7 +109,7 @@ public class MySQL {
                     + "\"" + (Integer.parseInt(idFilial)) + "\", "
                     + "\"" + StringToDate(fechaIngreso) + "\", "
                     + "\"" + StringToDate(fechaInicio) + "\", "
-                    + "\"" + StringToDate("50/50/0000") + "\", "
+                    + "\"" + StringToDate(fechaFin) + "\", "
                     + "\"" + (Integer.parseInt(categoria)) + "\", "
                     + "\"" + (Integer.parseInt(cantHoras)) + "\", "
                     + "\"" + (Integer.parseInt(sueldoBasico)) + "\")";
@@ -145,6 +145,31 @@ public class MySQL {
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
         }
     }
+    
+    
+    
+       public void UpdateContratos(String table_name, String idContrato, String filial, String ingreso, String inicio, String fin, String categoria, String horas, String sueldo) {
+        try {
+            String Query = "UPDATE " + table_name + " SET "
+                    + "idFilial =\"" + (Integer.parseInt(filial))+ " \", "     
+                    + "fechaIngreso =\"" + StringToDate(ingreso) + "\" , "
+                    + "fechaInicioActividades = \"" + StringToDate(inicio) + " \", "
+                    + "fechaFinActividades = \"" +StringToDate(fin)+ " \", "
+                    + "categoria = \"" + (Integer.parseInt(categoria)) + " \", "    
+                   
+                    + "cantidadHoras = \"" + (Integer.parseInt(horas)) + " \", "
+                    + "sueldoBasico = \"" + (Integer.parseInt(sueldo)) + " \""
+                    + " WHERE idContrato = \""+ (Integer.parseInt(idContrato))+" \"";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
+    
     
     public void BajaEmpleado(String table_name, String Id) {
         try {
