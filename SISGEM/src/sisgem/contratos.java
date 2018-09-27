@@ -110,6 +110,7 @@ public class contratos extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         fechFin = new javax.swing.JTextField();
+        idcontrato = new javax.swing.JTextField();
         FrmBuscar = new javax.swing.JInternalFrame();
         jLabel2 = new javax.swing.JLabel();
         cbBuscar = new javax.swing.JComboBox();
@@ -307,6 +308,12 @@ public class contratos extends javax.swing.JFrame {
 
         fechFin.setEditable(false);
 
+        idcontrato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idcontratoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout FrmNuevoLayout = new javax.swing.GroupLayout(FrmNuevo.getContentPane());
         FrmNuevo.getContentPane().setLayout(FrmNuevoLayout);
         FrmNuevoLayout.setHorizontalGroup(
@@ -330,8 +337,10 @@ public class contratos extends javax.swing.JFrame {
             .addGroup(FrmNuevoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FrmNuevoLayout.createSequentialGroup()
+                            .addComponent(idcontrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(49, 49, 49)
                             .addComponent(BCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -342,36 +351,32 @@ public class contratos extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(fechFin, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                                .addComponent(fechinicio))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(FrmNuevoLayout.createSequentialGroup()
-                        .addComponent(jLabel55)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(nomyape, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(FrmNuevoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(FrmNuevoLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fechIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel59)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FrmNuevoLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filial, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel60)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel61)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(sueldo)))
+                                .addComponent(fechinicio)))
+                        .addGroup(FrmNuevoLayout.createSequentialGroup()
+                            .addComponent(jLabel55)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(nomyape, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(FrmNuevoLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(fechIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(42, 42, 42)
+                            .addComponent(jLabel59)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(categoria, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(FrmNuevoLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(filial, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel60)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(horas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel61)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(sueldo))))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         FrmNuevoLayout.setVerticalGroup(
@@ -390,7 +395,7 @@ public class contratos extends javax.swing.JFrame {
                 .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel55)
                     .addComponent(nomyape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -415,9 +420,11 @@ public class contratos extends javax.swing.JFrame {
                     .addComponent(jLabel61)
                     .addComponent(sueldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(BGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FrmNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(BCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                        .addComponent(BGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(idcontrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -508,7 +515,7 @@ public class contratos extends javax.swing.JFrame {
                     .addComponent(btBuscar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addGroup(FrmBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -582,7 +589,7 @@ public class contratos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FrmBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FrmNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         pack();
@@ -723,20 +730,20 @@ public class contratos extends javax.swing.JFrame {
                     int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea modificar los datos actuales?");
                     if(confirmar == JOptionPane.YES_OPTION){
 
-                        db.UpdateData("contra", dni4.getText(),
-                        cuil4.getText(),
-                        nombre4.getText(),
-                        //jComboBoxSexo.getSelectedItem().toString());
-                         apellido4.getText(),
-                        direccion4.getText(),
+                        db.UpdateContratos("contratos", 
+                        idcontrato.getText(),
+                        filial.getSelectedItem().toString(),
+                        fechIngreso.getText(),
+                        fechinicio.getText(),
 
-                        telefono4.getText(),
-                        celular4.getText(),
-                        correo4.getText(),
-                        txtId.getText());
+                        fechFin.getText(),
+                        categoria.getText(),
+                        horas.getText(),
+                        sueldo.getText());
                         B=0;
-                        FmBuscar.setVisible(true);
-                        FmAgregar.setVisible(false);
+                        FrmBuscar.setVisible(true);
+                        FrmNuevo.setVisible(false);
+                        
                     }
                 }
                 db.closeConnection();
@@ -819,7 +826,25 @@ public class contratos extends javax.swing.JFrame {
     }//GEN-LAST:event_idActionPerformed
 
     private void jButton11ActionPerformed1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed1
-        // TODO add your handling code here:
+        int filaseleccionada = tbContratos.getSelectedRow();
+        //int seleccion=tbEmpleados.getSelectedColumn();
+        if(filaseleccionada!= -1){
+        
+            int confirmar = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea dar de baja a este contrato?");
+            //int filaseleccionada = tbEmpleados.getSelectedRow();
+            String idContrato = tbContratos.getValueAt(filaseleccionada, 0).toString();
+                if(confirmar == JOptionPane.YES_OPTION){
+                    db.MySQLConnection("root", "", "empleadosbd");
+                    db.DarBaja("contratos", idContrato, "idContrato");
+                    db.closeConnection();   
+                    //System.out.print(idEmpleado);
+
+            }// TODO add your handling code here:
+        }else{
+           JOptionPane.showMessageDialog(null, "Debe selecionar el contrato que desea dar de baja");
+          }
+                                          
+         
     }//GEN-LAST:event_jButton11ActionPerformed1
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
@@ -850,12 +875,13 @@ public class contratos extends javax.swing.JFrame {
                 String f= rs.getString("idFilial");
                 String sueldoB= rs.getString("sueldoBasico");
                 String idEmp=rs.getString("idEmpleado");
+                //String idCont=rs.getString("idContrato");
                 
                 fechinicio.setText(fechinici);
                 fechIngreso.setText(fechIngres);
                 fechFin.setText(fechFinal);
                 categoria.setText(cat);
-                
+                idcontrato.setText(idContr);               
                 horas.setText(hs);
                 sueldo.setText(sueldoB);
                 dni.setText(dniEm);
@@ -896,6 +922,10 @@ public class contratos extends javax.swing.JFrame {
      
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void idcontratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idcontratoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idcontratoActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -920,6 +950,7 @@ public class contratos extends javax.swing.JFrame {
     private javax.swing.JComboBox filial;
     private javax.swing.JTextField horas;
     private javax.swing.JTextField id;
+    private javax.swing.JTextField idcontrato;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;

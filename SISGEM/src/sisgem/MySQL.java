@@ -100,6 +100,7 @@ public class MySQL {
     
      public void insertContrato(String table_name, String idEmpleado, String idFilial, String fechaIngreso, String fechaInicio, String fechaFin, String categoria, String cantHoras,String sueldoBasico) {
         Date f= null;
+        String estado="1";
          try {
             
             String Query = "INSERT INTO " + table_name + " VALUES("
@@ -112,7 +113,8 @@ public class MySQL {
                     + "\"" + StringToDate(fechaFin) + "\", "
                     + "\"" + (Integer.parseInt(categoria)) + "\", "
                     + "\"" + (Integer.parseInt(cantHoras)) + "\", "
-                    + "\"" + (Integer.parseInt(sueldoBasico)) + "\")";
+                    + "\"" + (Integer.parseInt(sueldoBasico)) + "\""
+                    + "\"" + (Integer.parseInt(estado)) + "\")";
                    //System.out.println(Integer.parseInt(dni));
             Statement st = Conexion.createStatement();
             st.executeUpdate(Query);
@@ -154,12 +156,12 @@ public class MySQL {
                     + "idFilial =\"" + (Integer.parseInt(filial))+ " \", "     
                     + "fechaIngreso =\"" + StringToDate(ingreso) + "\" , "
                     + "fechaInicioActividades = \"" + StringToDate(inicio) + " \", "
-                    + "fechaFinActividades = \"" +StringToDate(fin)+ " \", "
+                    + "fechaFinActividades = \"" + StringToDate(fin) + " \", "
                     + "categoria = \"" + (Integer.parseInt(categoria)) + " \", "    
                    
                     + "cantidadHoras = \"" + (Integer.parseInt(horas)) + " \", "
                     + "sueldoBasico = \"" + (Integer.parseInt(sueldo)) + " \""
-                    + " WHERE idContrato = \""+ (Integer.parseInt(idContrato))+" \"";
+                    + " WHERE idContrato = \"" + (Integer.parseInt(idContrato))+" \"";
                    //System.out.println(Integer.parseInt(dni));
             Statement st = Conexion.createStatement();
             st.executeUpdate(Query);
@@ -171,20 +173,22 @@ public class MySQL {
     }
     
     
-    public void BajaEmpleado(String table_name, String Id) {
+    public void DarBaja(String table_name, String Id, String Campo) {
         try {
             String Query = "UPDATE " + table_name + " SET "
                     + " estado = \"2\""
-                    + " WHERE idEmpleado = \""+ (Integer.parseInt(Id))+" \"";
+                    + " WHERE "+ Campo +" = \""+ (Integer.parseInt(Id))+" \"";
                    //System.out.println(Integer.parseInt(dni));
             Statement st = Conexion.createStatement();
             st.executeUpdate(Query);
-            JOptionPane.showMessageDialog(null, "El empleado ha sido dado de baja");
+            JOptionPane.showMessageDialog(null, "El registro ha sido dado de baja");
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
         }
     }
+    
+  
     
     public void deleteRecord(String table_name, String ID) {
         try {

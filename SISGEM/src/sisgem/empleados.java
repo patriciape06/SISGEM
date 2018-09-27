@@ -794,9 +794,9 @@ public class empleados extends javax.swing.JFrame {
             String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 0).toString();
                 if(confirmar == JOptionPane.YES_OPTION){
                     db.MySQLConnection("root", "", "empleadosbd");
-                    db.BajaEmpleado("empleados", idEmpleado);
+                    db.DarBaja("empleados", idEmpleado, "idEmpleado");
                     db.closeConnection();   
-                    System.out.print(idEmpleado);
+                    //System.out.print(idEmpleado);
 
             }// TODO add your handling code here:
         }else{
