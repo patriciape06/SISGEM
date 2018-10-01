@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,10 +53,10 @@ public class MySQL {
      
      
 
-    public void MySQLConnection(String user, String pass, String db_name) {
+    public void MySQLConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db_name, user, pass);
+            Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + "empleadosbd", "root", "");
             System.out.println("Se ha iniciado la conexión con el servidor de forma exitosa");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,7 +126,60 @@ public class MySQL {
         }
     }
     
-    
+     public void insertFilial(String table_name, String nombre, String direccion, String telefono, String correo,String tipo) {
+        Date f= null;
+        String estado="1";
+         try {
+            
+            String Query = "INSERT INTO " + table_name + " VALUES("
+                    + "\"" + 0 + "\", "   //campo autoincremental
+                    + "\"" + nombre + "\", "
+                    
+                    + "\"" + direccion + "\", "
+                   
+                    + "\"" + (Integer.parseInt(telefono)) + "\", "
+                    + "\"" + correo + "\", "
+                    + "\"" + (Integer.parseInt(tipo)) + "\","
+                    + "\"" + (Integer.parseInt(estado)) + "\")";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
+     
+     
+     
+    public void insertFicahada(String table_name, String filial, String empleado, String fecha, String horaEntrada) {
+        Date f= null;
+        
+         try {
+            
+            String Query = "INSERT INTO " + table_name + " VALUES("
+                    + "\"" + (Integer.parseInt(filial)) + "\", "   //campo autoincremental
+                    + "\"" + (Integer.parseInt(empleado)) + "\", "
+                    
+                    + "\"" + StringToDate(fecha) + "\", "
+                   
+                    + "\"" + Timestamp.valueOf(horaEntrada) + "\")";
+                    
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    } 
+     
+     
+     
+     
+     
     public void UpdateData(String table_name, String dni, String cuil, String nombreEmpleado, String apellidoEmpleado, String domicilioEmpleado, String telefonoEmpleado, String celularEmpleado, String correoEmpleado, String Id) {
         try {
             String Query = "UPDATE " + table_name + " SET "
@@ -148,6 +202,24 @@ public class MySQL {
         }
     }
     
+           public void UpdateFiliales(String table_name, String nombre, String direccion, String telefono, String correo, String tipo, String id) {
+        try {
+            String Query = "UPDATE " + table_name + " SET "
+                    + "nombreFilial =\"" + nombre + " \", "     
+                    + "direccionFilial =\"" + direccion + "\" , "
+                    + "telefonoFilial = \"" + (Integer.parseInt(telefono)) + " \", "
+                    + "correoFilial = \"" + correo + " \", "
+                    + "tipoFilial = \"" + (Integer.parseInt(tipo)) + " \""          
+                    + " WHERE idFilial = \"" + (Integer.parseInt(id))+" \"";
+                   //System.out.println(Integer.parseInt(dni));
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
     
     
        public void UpdateContratos(String table_name, String idContrato, String filial, String ingreso, String inicio, String fin, String categoria, String horas, String sueldo) {
@@ -205,9 +277,9 @@ public class MySQL {
         
     
     
-    public static ResultSet BuscarEmpleado(ResultSet rs) throws SQLException{
+    public static ResultSet BuscarDatos(ResultSet rs,String table_name ) throws SQLException{
     try{
-        String Query="select * from empleados";
+        String Query="select * from " + table_name;
         Statement st=Conexion.createStatement();
         rs=st.executeQuery(Query);
         
@@ -220,22 +292,7 @@ public class MySQL {
     
     
     
-    public static ResultSet BuscarEmpleado2(ResultSet rs, String table_name, String campo, String dato) throws SQLException{
-    try{
-        String Query= "SELECT * FROM " + table_name + " where " + campo + " like '%" + dato +"%'"; // LIKE '%$texto%       
-        
-        Statement st=Conexion.createStatement();
-        rs=st.executeQuery(Query);
-        
-        }catch (SQLException ex){
-               System.out.println(ex.getMessage());
-               JOptionPane.showMessageDialog(null, "No se encontro el registro");
-        }
-        return rs;      
-    }
-    
-   
-     public static ResultSet BuscarContratos2(ResultSet rs, String table_name, String campo, String dato) throws SQLException{
+    public static ResultSet BuscarDatos2(ResultSet rs, String table_name, String campo, String dato) throws SQLException{
     try{
         String Query= "SELECT * FROM " + table_name + " where " + campo + " like '%" + dato +"%'"; // LIKE '%$texto%       
         
@@ -249,33 +306,10 @@ public class MySQL {
         return rs;      
     }
     
+  
     
-      public static ResultSet BuscarContratos(ResultSet rs) throws SQLException{
-    try{
-        String Query="select * from contratos";
-        Statement st=Conexion.createStatement();
-        rs=st.executeQuery(Query);
         
-        }catch (SQLException ex){
-               System.out.println(ex.getMessage());
-               JOptionPane.showMessageDialog(null, "No se encontro el registro");
-        }
-        return rs;      
-    }
+}
      
     
-     public static ResultSet BuscarFilial(ResultSet rs) throws SQLException{
-    try{
-        String Query="select * from filiales";
-        Statement st=Conexion.createStatement();
-        rs=st.executeQuery(Query);
-        
-        }catch (SQLException ex){
-               System.out.println(ex.getMessage());
-               JOptionPane.showMessageDialog(null, "No se encontro el registro");
-        }
-        return rs;      
-    }
-    
-    
-}
+

@@ -384,7 +384,7 @@
                           <Component id="txtId" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="84" max="32767" attributes="0"/>
+                  <EmptySpace pref="88" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -589,7 +589,7 @@
                       <Component id="btBja" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="btCancelar" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="104" max="32767" attributes="0"/>
+                  <EmptySpace pref="108" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

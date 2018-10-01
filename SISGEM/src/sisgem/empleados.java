@@ -624,7 +624,7 @@ public class empleados extends javax.swing.JFrame {
         if(!(Vacio())) {
     
                 //System.out.print("paso igual");
-                db.MySQLConnection("root", "", "empleadosbd");
+                db.MySQLConnection();
                 if(B==0){
                     db.insertData("empleados", dni4.getText(),
                     cuil4.getText(),
@@ -689,16 +689,16 @@ public class empleados extends javax.swing.JFrame {
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         try{
             int f, i;
-            db.MySQLConnection("root", "", "empleadosbd");
+            db.MySQLConnection();
             String v =(String)cbBuscar.getSelectedItem();
             String campo=txtCampo.getText();
 
             if (campo!= ""){
-                rs=db.BuscarEmpleado2(rs,"empleados",v,campo);
+                rs=db.BuscarDatos2(rs,"empleados",v,campo);
             }else{
                 //System.out.print("V="+ v);
                 // System.out.print("campo= "+campo);
-                rs=db.BuscarEmpleado(rs);
+                rs=db.BuscarDatos(rs, "empleados");
             }
             String datos[]=new String[6];
             if(rs.first()){
@@ -743,8 +743,8 @@ public class empleados extends javax.swing.JFrame {
             FmAgregar.setVisible(true);
             FmBuscar.setVisible(false);  
           
-            db.MySQLConnection("root", "", "empleadosbd");
-            rs=db.BuscarEmpleado2(rs,"empleados","idEmpleado",idEmpleado);
+            db.MySQLConnection();
+            rs=db.BuscarDatos2(rs,"empleados","idEmpleado",idEmpleado);
             while (rs.next()){
                 String dni= rs.getString(2);
                 String cuil= rs.getString(3);
@@ -793,7 +793,7 @@ public class empleados extends javax.swing.JFrame {
             //int filaseleccionada = tbEmpleados.getSelectedRow();
             String idEmpleado = tbEmpleados.getValueAt(filaseleccionada, 0).toString();
                 if(confirmar == JOptionPane.YES_OPTION){
-                    db.MySQLConnection("root", "", "empleadosbd");
+                    db.MySQLConnection();
                     db.DarBaja("empleados", idEmpleado, "idEmpleado");
                     db.closeConnection();   
                     //System.out.print(idEmpleado);

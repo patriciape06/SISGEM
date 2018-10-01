@@ -256,7 +256,7 @@ public class buscar_empleado extends javax.swing.JFrame {
 
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         
-        db.MySQLConnection("root", "", "empleadosbd");
+        db.MySQLConnection();
         String v =(String)cbBuscar.getSelectedItem();
         //db.BuscarEmpleado2("empleados", txtCampo.getText(),v);
         //System.out.println(v);        

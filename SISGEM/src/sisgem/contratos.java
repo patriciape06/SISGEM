@@ -637,22 +637,22 @@ public class contratos extends javax.swing.JFrame {
         
         try{
             int f, i;
-            db.MySQLConnection("root", "", "empleadosbd");
+            db.MySQLConnection();
             String v =(String)cbBuscar.getSelectedItem();
             String campo=txtCampo.getText();
             String id="0";
             String dni="0";
             String apeNom="0";
             if (!(txtCampo.getText().isEmpty())){
-                rs2=db.BuscarEmpleado2(rs2,"empleados",v,campo);
+                rs2=db.BuscarDatos2(rs2,"empleados",v,campo);
                 while(rs2.next()) {
                          id =(String) rs2.getString(1);
                          
                 }
-                rs=db.BuscarContratos2(rs,"contratos","idEmpleado",id);
+                rs=db.BuscarDatos2(rs,"contratos","idEmpleado",id);
             }else{
                 
-                rs=db.BuscarContratos(rs);
+                rs=db.BuscarDatos(rs, "contratos");
             }
             String datos[]=new String[6];
             if(rs.first()){
@@ -663,7 +663,7 @@ public class contratos extends javax.swing.JFrame {
                     for(i=0;i<f;i++)
                     dtm.removeRow(0);
                     while(rs.next()) {
-                        rs2=db.BuscarEmpleado2(rs2,"empleados","idEmpleado",rs.getString(2));
+                        rs2=db.BuscarDatos2(rs2,"empleados","idEmpleado",rs.getString(2));
                         while(rs2.next()) {
                             
                             datos[2]= (String)rs2.getString(4)+' '+(String)rs2.getString(5);
@@ -712,7 +712,7 @@ public class contratos extends javax.swing.JFrame {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         if(!(Vacio())) {      
-                db.MySQLConnection("root", "", "empleadosbd");
+                db.MySQLConnection();
                // Date  F=new java.sql.Date((fechIngreso.getText()).getTime()));
                 if(B==0){
                         db.insertContrato("contratos", id.getText(),
@@ -771,13 +771,13 @@ public class contratos extends javax.swing.JFrame {
     private void BBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BBuscarActionPerformed
         
         try{
-            db.MySQLConnection("root", "", "empleadosbd");
+            db.MySQLConnection();
             //String v = (String)BBuscar.getS
             String dniemp=dni.getText();
             
             if (!(dni.getText().isEmpty())){
                 
-                rs=db.BuscarEmpleado2(rs,"empleados", "dni", dniemp);
+                rs=db.BuscarDatos2(rs,"empleados", "dni", dniemp);
                 //System.out.print(dniemp);
                 if(rs.first()){
                    System.out.print(dni);
@@ -798,7 +798,7 @@ public class contratos extends javax.swing.JFrame {
                     fechIngreso.setEditable(true);
                     fechFin.setEditable(true);
                     
-                    rs=db.BuscarFilial(rs);
+                    rs=db.BuscarDatos(rs, "filiales");
                     while(rs.next()) {
                          String f = rs.getString("idFilial");   
                          filial.addItem(f); 
@@ -834,7 +834,7 @@ public class contratos extends javax.swing.JFrame {
             //int filaseleccionada = tbEmpleados.getSelectedRow();
             String idContrato = tbContratos.getValueAt(filaseleccionada, 0).toString();
                 if(confirmar == JOptionPane.YES_OPTION){
-                    db.MySQLConnection("root", "", "empleadosbd");
+                    db.MySQLConnection();
                     db.DarBaja("contratos", idContrato, "idContrato");
                     db.closeConnection();   
                     //System.out.print(idEmpleado);
@@ -864,8 +864,8 @@ public class contratos extends javax.swing.JFrame {
             FrmBuscar.setVisible(false);
             FrmNuevo.setVisible(true);
           
-            db.MySQLConnection("root", "", "empleadosbd");
-            rs=db.BuscarEmpleado2(rs,"contratos","idContrato",idContr);
+            db.MySQLConnection();
+            rs=db.BuscarDatos2(rs,"contratos","idContrato",idContr);
             while (rs.next()){
                 String fechinici= DateToString(rs.getDate("fechaInicioActividades"));
                 String fechIngres= DateToString(rs.getDate("fechaIngreso"));
@@ -888,7 +888,7 @@ public class contratos extends javax.swing.JFrame {
                 id.setText(idEmp);
                 nomyape.setText(nomApe);
                 
-                rs=db.BuscarFilial(rs);
+                rs=db.BuscarDatos(rs, "filiales");
                     while(rs.next()) {
                          String fi = rs.getString("idFilial");   
                          filial.addItem(fi); 

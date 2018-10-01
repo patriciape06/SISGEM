@@ -59,6 +59,11 @@ public class main extends javax.swing.JFrame {
         jButton3.setText("Informes");
 
         jButton2.setText("Gestionar Filiar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Gestionar Contratos");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +163,9 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        fichadas fi= new fichadas();
+        fi.setVisible(true);
+                      
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -174,6 +181,12 @@ public class main extends javax.swing.JFrame {
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         System.exit(0);
     }//GEN-LAST:event_jMenu2MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        filiales f= new filiales();
+        f.setVisible(true);
+                           
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
