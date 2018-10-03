@@ -7,10 +7,23 @@ package sisgem;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
-import static sisgem.contratos.rs;
+//import static sisgem.contratos.rs;
 import java.util.Calendar;
 import java.util.Date;
+import java.sql.*;
+import java.sql.Statement;
+import java.io.*;
+import java.time.LocalTime;
+import javax.swing.*;
+import java.time.temporal.*;
+import java.time.format.*;
+import javafx.util.Duration;
+
+
+
 /**
  *
  * @author alumno
@@ -20,16 +33,75 @@ public class fichadas extends javax.swing.JFrame {
     String estado="1";
     static ResultSet rs=null;
     static ResultSet rs2=null;
-
-    /**
+        /**
      * Creates new form fichadas
      */
     public fichadas() {
         initComponents();
-        txtNomApe.setVisible(false);
+        txtNomApe.setVisible(true);
         txtIdEmpleado.setVisible(false);
+        cmbFilial.setEditable(true);
     }
 
+    
+    
+         
+     public Date StringToDate (String fecha){
+		//Diferentes fechas a parsear
+		//String stringFechaHora = "2014-10-20 20:10:59";
+		//String stringFecha = "20/10/2014";
+		//String stringHora = "10:20:59";
+                
+	SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        String strFecha = fecha;
+        Date fechaDate = null;
+        //Date date2 = null;
+        try {
+            fechaDate = formato.parse(strFecha);
+            java.sql.Date date2 = new java.sql.Date(fechaDate.getTime());
+            
+            //JOptionPane.showMessageDialog(null, date2);
+            return date2;
+            
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return fechaDate;
+        }	
+    }
+    
+    public Integer CantidadHorasTRabajadas(String HoraI, String HoraS){
+      
+        SimpleDateFormat dateFormat = new SimpleDateFormat("H:m:s");
+        int diferencia = 0;
+      try{
+        Date fechaInicial=dateFormat.parse(HoraI);
+        Date fechaFinal=dateFormat.parse(HoraS);
+  
+        diferencia=(int) ((fechaFinal.getTime()-fechaInicial.getTime())/1000);
+ 
+        int dias=0;
+        int horas=0;
+        int minutos=0;
+        if(diferencia>86400) {
+            dias=(int)Math.floor(diferencia/86400);
+            diferencia=diferencia-(dias*86400);
+        }
+        if(diferencia>3600) {
+            horas=(int)Math.floor(diferencia/3600);
+            diferencia=diferencia-(horas*3600);
+        }
+        if(diferencia>60) {
+            minutos=(int)Math.floor(diferencia/60);
+            diferencia=diferencia-(minutos*60);
+        }
+        //System.out.println("Hay "+dias+" dias, "+horas+" horas, "+minutos+" minutos y "+diferencia+" segundos de diferencia");
+        return horas;
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            return diferencia;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,7 +123,7 @@ public class fichadas extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
+        FrmFichada = new javax.swing.JInternalFrame();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -64,7 +136,6 @@ public class fichadas extends javax.swing.JFrame {
         cmbFilial = new javax.swing.JComboBox();
         btnEntrada = new javax.swing.JButton();
         btnSalida = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jButton13 = new javax.swing.JButton();
         txtNomApe = new javax.swing.JTextField();
         txtIdEmpleado = new javax.swing.JTextField();
@@ -158,7 +229,7 @@ public class fichadas extends javax.swing.JFrame {
             }
         });
 
-        jInternalFrame1.setVisible(true);
+        FrmFichada.setVisible(true);
 
         jLabel2.setText("DNI Empleado:");
 
@@ -186,6 +257,11 @@ public class fichadas extends javax.swing.JFrame {
 
         btnSalida.setText("Fichar SALIDA");
         btnSalida.setEnabled(false);
+        btnSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalidaActionPerformed(evt);
+            }
+        });
 
         jButton13.setText("Buscar");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -196,83 +272,87 @@ public class fichadas extends javax.swing.JFrame {
 
         txtNomApe.setEditable(false);
 
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+        javax.swing.GroupLayout FrmFichadaLayout = new javax.swing.GroupLayout(FrmFichada.getContentPane());
+        FrmFichada.getContentPane().setLayout(FrmFichadaLayout);
+        FrmFichadaLayout.setHorizontalGroup(
+            FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FrmFichadaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNomApe)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cmbFilial, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jLabel3))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                                        .addComponent(btnEntrada)
-                                        .addGap(26, 26, 26)))
-                                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnSalida, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FrmFichadaLayout.createSequentialGroup()
+                        .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator2)
+                            .addGroup(FrmFichadaLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbFilial, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton13)
+                                .addGap(8, 8, 8)))
+                        .addGap(22, 22, 22))
+                    .addGroup(FrmFichadaLayout.createSequentialGroup()
+                        .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(FrmFichadaLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FrmFichadaLayout.createSequentialGroup()
+                                .addComponent(txtNomApe, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FrmFichadaLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(btnEntrada)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnSalida))
+                            .addGroup(FrmFichadaLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtHoraIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 94, Short.MAX_VALUE))))
-            .addComponent(jSeparator2)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+        FrmFichadaLayout.setVerticalGroup(
+            FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FrmFichadaLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jButton13)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton13)
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNomApe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbFilial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtHoraIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
+                .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FrmFichadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(txtHoraIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
                     .addComponent(txtHoraSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -284,16 +364,16 @@ public class fichadas extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(FrmFichada)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton9)))
+                        .addComponent(jButton8)))
+                .addGap(32, 32, 32)
+                .addComponent(jButton9)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -308,9 +388,9 @@ public class fichadas extends javax.swing.JFrame {
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jInternalFrame1)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(FrmFichada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -329,7 +409,19 @@ public class fichadas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+      try{ 
+        FrmFichada.setVisible(true);
+        db.MySQLConnection();
+        rs=db.BuscarDatos(rs, "filiales");
+                    while(rs.next()) {
+                         String f = rs.getString("idFilial");   
+                         cmbFilial.addItem(f); 
+                    }
+        db.closeConnection();
+      }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }  
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -340,14 +432,13 @@ public class fichadas extends javax.swing.JFrame {
         try{
             db.MySQLConnection();
             //String v = (String)BBuscar.getS
-            String dniemp=txtDni.getText();
-            
+            String dniemp=txtDni.getText();           
             if (!(txtDni.getText().isEmpty())){
                 
                 rs=db.BuscarDatos2(rs,"empleados", "dni", dniemp);
                 //System.out.print(dniemp);
                 if(rs.first()){
-                   //System.out.print(dni);
+                   //System.out.print(dniemp);
                     rs.beforeFirst();
                     while (rs.next()){
                         String nom=rs.getString(4);
@@ -359,24 +450,30 @@ public class fichadas extends javax.swing.JFrame {
                         
                     }
                     Calendar cal=Calendar.getInstance(); 
-                    Date fechaDate = null;
-                    String fecha=cal.get(cal.DATE)+"/"+cal.get((cal.MONTH)) +"/"+cal.get(cal.YEAR);
-                    cmbFilial.setEditable(true);
+                    
+                    String fecha=cal.get(cal.DATE)+"/"+cal.get((cal.MONTH)) +"/"+cal.get(cal.YEAR);                    
                     txtFecha.setText(fecha);
+                    rs2=db.BuscarFichada(rs2, txtIdEmpleado.getText(),cmbFilial.getSelectedItem().toString(),
+                                         StringToDate(txtFecha.getText()));
+                    
+                    if(rs2.first()){
+                        
+                       rs2.beforeFirst();
+                       while(rs2.next()){
+                           txtHoraIngreso.setText(rs2.getString("horaEntrada"));
+                           String salida= rs2.getString("horaSalida");
+                           if(salida.equals("00:00:00")){
+                               btnSalida.setEnabled(true);
+                               btnEntrada.setEnabled(false);
+                           }else  txtHoraSalida.setText(rs2.getString("horaSalida"));
+                       }
+                    }else{
                     btnEntrada.setEnabled(true);
+                    btnSalida.setEnabled(false);
+                    }
                     //btnSalida.setEnabled(true);
                     //txtHoraIngreso.setEditable(true);
-                    //txtHoraSalida.setEditable(true);
-                   
-                    
-                    
-                    rs=db.BuscarDatos(rs, "filiales");
-                    while(rs.next()) {
-                         String f = rs.getString("idFilial");   
-                         cmbFilial.addItem(f); 
-                    } 
-                    
-                    
+                    //txtHoraSalida.setEditable(true);                  
                 }else{
                 JOptionPane.showMessageDialog(null, "El Dni ingresado no se encuentra en la Base de Datos de Empleados");
                 txtDni.setText("");
@@ -397,12 +494,45 @@ public class fichadas extends javax.swing.JFrame {
         String hora = cal.get(cal.HOUR_OF_DAY)+":"+cal.get(cal.MINUTE)+":"+cal.get(cal.SECOND);
         txtHoraIngreso.setText(hora);
         db.MySQLConnection();
-         db.insertFicahada("fichadas", cmbFilial.getSelectedItem().toString(),
+         db.insertFichada(cmbFilial.getSelectedItem().toString(),
                             txtIdEmpleado.getText(),
                             txtFecha.getText(),
                             txtHoraIngreso.getText());
+        db.closeConnection();
                      
     }//GEN-LAST:event_btnEntradaActionPerformed
+
+    private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
+        Calendar cal=Calendar.getInstance();  
+        String c="";
+        String hora = cal.get(cal.HOUR_OF_DAY)+":"+cal.get(cal.MINUTE)+":"+cal.get(cal.SECOND);
+        txtHoraSalida.setText(hora);
+        
+        int horas=CantidadHorasTRabajadas(txtHoraIngreso.getText(),txtHoraSalida.getText());
+  
+        //esta=resta/(1000*60);
+        //System.out.print(horas);
+        try{
+            db.MySQLConnection();
+            rs=db.BuscarCantHoras(rs, txtIdEmpleado.getText(),cmbFilial.getSelectedItem().toString());
+            if(rs.first()){
+                        
+                rs.beforeFirst();
+                while(rs.next()){
+                    c=rs.getString("cantidadHoras");
+                    
+                }
+            }
+            int extras= horas - Integer.parseInt(c);
+            if (horas)
+            //db.fichadaSalida(txtIdEmpleado.getText(), cmbFilial.getSelectedItem().toString(),
+                             //   txtFecha.getText(), txtHoraSalida.getText());
+            db.closeConnection();
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+            
+        }  
+    }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,6 +570,7 @@ public class fichadas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JInternalFrame FrmFichada;
     private javax.swing.JButton btnEntrada;
     private javax.swing.JButton btnSalida;
     private javax.swing.JComboBox cmbFilial;
@@ -454,7 +585,6 @@ public class fichadas extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -462,7 +592,6 @@ public class fichadas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtFecha;

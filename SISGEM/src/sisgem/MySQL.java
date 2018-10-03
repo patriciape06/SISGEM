@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +50,7 @@ public class MySQL {
             ex.printStackTrace();
             return fechaDate;
         }	
-}
+    }
    
      
      
@@ -153,18 +155,27 @@ public class MySQL {
      
      
      
-    public void insertFicahada(String table_name, String filial, String empleado, String fecha, String horaEntrada) {
+   public void insertFichada(String filial, String empleado, String fecha, String horaEntrada) {
         Date f= null;
+        //Calendar cal=Calendar.getInstance();   
+        //String horaS = cal.get(cal.HOUR_OF_DAY)+":"+cal.get(cal.MINUTE)+":"+cal.get(cal.SECOND);
+        
+        String HorasS= "00:00:00";
+        Integer HorasTrabajada= 0;
+        Integer HorasExtras=0;
         
          try {
             
-            String Query = "INSERT INTO " + table_name + " VALUES("
+            String Query = "INSERT INTO " + "fichadas" + " VALUES("
                     + "\"" + (Integer.parseInt(filial)) + "\", "   //campo autoincremental
                     + "\"" + (Integer.parseInt(empleado)) + "\", "
                     
                     + "\"" + StringToDate(fecha) + "\", "
                    
-                    + "\"" + Timestamp.valueOf(horaEntrada) + "\")";
+                    + "\"" + Time.valueOf(horaEntrada)+ "\", "
+                    + "\"" + Time.valueOf(HorasS) + "\", "
+                    + "\"" + HorasTrabajada + "\", "
+                    + "\"" + HorasExtras+ "\") ";
                     
                    //System.out.println(Integer.parseInt(dni));
             Statement st = Conexion.createStatement();
@@ -178,6 +189,21 @@ public class MySQL {
      
      
      
+      public void fichadaSalida(String idEmpleado, String idFilial, String fecha, String hora){
+        try{
+           String Query= "UPDATE fichadas SET "
+                   +"horaSalida = \""+ Time.valueOf(hora) + " \"" 
+                   +"WHERE idEmpleado= "+ Integer.parseInt(idEmpleado) 
+                   + " AND idFilial = "+ Integer.parseInt(idFilial) 
+                   + " AND fecha= \""+StringToDate(fecha) + " \"";
+           Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+        }
+    }
      
      
     public void UpdateData(String table_name, String dni, String cuil, String nombreEmpleado, String apellidoEmpleado, String domicilioEmpleado, String telefonoEmpleado, String celularEmpleado, String correoEmpleado, String Id) {
@@ -245,6 +271,7 @@ public class MySQL {
     }
     
     
+    
     public void DarBaja(String table_name, String Id, String Campo) {
         try {
             String Query = "UPDATE " + table_name + " SET "
@@ -275,7 +302,19 @@ public class MySQL {
     }
     
         
-    
+    public static ResultSet BuscarCantHoras(ResultSet rs, String empleado, String filial) throws SQLException{
+    try{
+        String Query= "SELECT cantidadHoras FROM contratos where idEmpleado = " + empleado + " AND idFilial = "+ filial; // LIKE '%$texto%       
+        
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+        
+        }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro al empleado en esta filial!");
+        }
+        return rs;      
+    }
     
     public static ResultSet BuscarDatos(ResultSet rs,String table_name ) throws SQLException{
     try{
@@ -307,7 +346,21 @@ public class MySQL {
     }
     
   
-    
+    public static ResultSet BuscarFichada(ResultSet rs, String idEmpleado, String IdFilial, Date fecha){
+      
+      try{
+        String Query="SELECT * FROM fichadas WHERE idEmpleado = "
+                + (Integer.parseInt(idEmpleado)) 
+                +" AND idFilial = " + (Integer.parseInt(IdFilial)) + " AND fecha = \""
+                + fecha + " \"";
+        Statement st=Conexion.createStatement();
+        rs=st.executeQuery(Query);
+      }catch (SQLException ex){
+               System.out.println(ex.getMessage());
+               JOptionPane.showMessageDialog(null, "No se encontro el registro");
+        }
+        return rs; 
+    }
         
 }
      
